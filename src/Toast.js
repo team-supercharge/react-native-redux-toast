@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Animated, Text } from 'react-native';
+import PropTypes from 'prop-types';
 
 import styles from './Toast.styles';
 
@@ -37,12 +38,14 @@ export default class Toast extends Component {
         warning,
         dismissTimeout
       },
-      () => {
-        Animated.timing(this.state.fadeAnimation, { toValue: 1 }).start();
-        Animated.timing(this.state.shadowOpacity, { toValue: 0.5 }).start();
-      }
+      this.animateIn
     );
   }
+
+  animateIn = () => {
+    Animated.timing(this.state.fadeAnimation, { toValue: 1 }).start();
+    Animated.timing(this.state.shadowOpacity, { toValue: 0.5 }).start();
+  };
 
   hide() {
     Animated.timing(this.state.shadowOpacity, { toValue: 0 }).start();
@@ -93,12 +96,12 @@ Toast.defaultProps = {
 
 Toast.propTypes = {
   containerStyle: View.propTypes.style,
-  message: React.PropTypes.string,
+  message: PropTypes.string,
   messageStyle: Text.propTypes.style, // eslint-disable-line react/no-unused-prop-types
-  error: React.PropTypes.bool,
+  error: PropTypes.bool,
   errorStyle: View.propTypes.style,
-  warning: React.PropTypes.bool,
+  warning: PropTypes.bool,
   warningStyle: View.propTypes.style,
-  duration: React.PropTypes.number,
-  getMessageComponent: React.PropTypes.func
+  duration: PropTypes.number,
+  getMessageComponent: PropTypes.func
 };
